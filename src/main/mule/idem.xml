@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="3ace31b5-9529-4aef-9d0f-0d1f0e4641ed" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="idemFlow" doc:id="79c68973-707f-44b0-a7ca-ed81d78e0fca" >
+		<http:listener doc:name="Listener" doc:id="d42c8cb6-776d-49b1-97db-22a0ddcca2e7" config-ref="HTTP_Listener_config" path="idem1"/>
+		<idempotent-message-validator doc:name="Idempotent Message Validator" doc:id="baca0934-50ea-437b-987b-e5d0a347ebf3" idExpression="#[attributes.queryParams.name]" />
+		<set-payload value='#["siva krishna"]' doc:name="Set Payload" doc:id="2ab18c0e-0706-4a19-bf7e-6021e1d411db" />
+		<logger level="INFO" doc:name="Logger" doc:id="7240a98d-83eb-4a3f-9124-e2ef13486159" message="#[payload]"/>
+	</flow>
+</mule>
